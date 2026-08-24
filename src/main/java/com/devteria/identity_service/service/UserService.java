@@ -36,6 +36,7 @@ public class UserService {
     UserMapper userMapper;
 
     public UserResponse createUser(UserCreationRequest request) {
+        log.info("Service: Create user!");
         if (userRepository.existsByUsername(request.getUsername())) {
             throw new AppException(ErrorCode.USER_EXISTED);
         }
@@ -66,7 +67,7 @@ public class UserService {
     }
 
 //    @PreAuthorize("hasRole('ADMIN')")
-    @PreAuthorize("hasAuthority('Approve_post')")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public List<UserResponse> getUsers() {
         log.info("In method get Users");
         return userRepository.findAll().stream()
