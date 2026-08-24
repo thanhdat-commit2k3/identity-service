@@ -87,6 +87,13 @@
 			<scope>test</scope>
 		</dependency>
 
+		<!--Mock user(unit test)-->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-webmvc-test</artifactId>
@@ -123,6 +130,36 @@
 							<version>0.2.0</version>
 						</path>
 					</annotationProcessorPaths>
+				</configuration>
+			</plugin>
+
+			<!--Jacoco-->
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.8.12</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>report</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<excludes>
+						<!--Loại trừ các package không có unit test-->
+						<exclude>com/devteria/identity_service/dto/**</exclude>
+						<exclude>com/devteria/identity_service/entity/**</exclude>
+						<exclude>com/devteria/identity_service/configuration/**</exclude>
+						<exclude>com/devteria/identity_service/mapper/**</exclude>
+					</excludes>
 				</configuration>
 			</plugin>
 		</plugins>
