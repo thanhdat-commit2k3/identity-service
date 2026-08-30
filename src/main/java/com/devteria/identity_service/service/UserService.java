@@ -1,10 +1,11 @@
 package com.devteria.identity_service.service;
 
+import com.devteria.identity_service.constant.PredefinedRole;
 import com.devteria.identity_service.dto.request.UserCreationRequest;
 import com.devteria.identity_service.dto.request.UserUpdateRequest;
 import com.devteria.identity_service.dto.response.UserResponse;
+import com.devteria.identity_service.entity.Role;
 import com.devteria.identity_service.entity.User;
-import com.devteria.identity_service.enums.Role;
 import com.devteria.identity_service.exception.AppException;
 import com.devteria.identity_service.exception.ErrorCode;
 import com.devteria.identity_service.mapper.UserMapper;
@@ -43,10 +44,10 @@ public class UserService {
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
         user.setPassword(passwordEncoder.encode(request.getPassword()));
 
-        Set<String> roles = new HashSet<>();
-        roles.add(Role.USER.name());
+        Set<Role> roles = new HashSet<>();
+        roleRepository.findById(PredefinedRole.USER_ROLE).ifPresent(roles::add);
+        user.setRoles(roles);
 
-//        user.setRoles(roles);
         try {
             user = userRepository.save(user);
         } catch(DataIntegrityViolationException exception) {
