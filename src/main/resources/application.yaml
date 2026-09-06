@@ -5,7 +5,7 @@ server:
 
 spring:
   application:
-    name: identity-service0
+    name: identity-service
 
   datasource:
     url: ${DBMS_CONNECTION:jdbc:mysql://localhost:3307/identity_service}
