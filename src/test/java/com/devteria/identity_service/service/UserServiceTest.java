@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
@@ -82,7 +83,8 @@ public class UserServiceTest {
     @Test
     void createUser_userExisted_fail() {
         // Given
-        Mockito.when(userRepository.existsByUsername(anyString())).thenReturn(true);
+        Mockito.when(userRepository.save(any()))
+                .thenThrow(new DataIntegrityViolationException("User already exists"));
 
         // When
         var exception = assertThrows(AppException.class,
