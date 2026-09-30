@@ -1,3 +1,17 @@
+spring:
+  datasource:
+    url: ${DBMS_CONNECTION}
+    driverClassName: "com.mysql.cj.jdbc.Driver"
+    username: ${DBMS_USERNAME}
+    password: ${DBMS_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false # Tắt log SQL ở môi trường production để tối ưu hiệu năng
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+
 jwt:
   valid-duration: 7200 # second
   refreshable-duration: 72000 #second
